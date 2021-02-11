@@ -7,15 +7,19 @@ class Form extends Component {
     this.state = {
       name: "",
       email: "",
-      language: "javascript",
+      country: "india",
       textInfo: "Write something...",
+      isOk: false,
+      gender: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    alert("The was submitted: " + this.state.name);
+    console.log(
+      `${this.state.name}, ${this.state.email}, ${this.state.country}, ${this.state.textInfo}, ${this.state.isOk} ${this.state.gender}`
+    );
   }
 
   handleNameChange = (e) => {
@@ -27,11 +31,21 @@ class Form extends Component {
   };
 
   handleSelectChange = (e) => {
-    this.setState({ language: e.target.value });
+    this.setState({ country: e.target.value });
   };
 
   handleTextInfoChange = (e) => {
     this.setState({ textInfo: e.target.value });
+  };
+
+  handleCheckboxChange = (e) => {
+    const target = e.target;
+    const value = target.type === "checkbox" ? target.checked : false;
+    this.setState({ isOk: value });
+  };
+
+  handleGenderChange = (e) => {
+    this.setState({ gender: e.target.value });
   };
 
   render() {
@@ -58,17 +72,44 @@ class Form extends Component {
           </label>
           <br />
           <label>
-            Pick your favorite programming language
+            Select Country
             <select
-              value={this.state.language}
+              value={this.state.country}
               onChange={this.handleSelectChange}
             >
-              <option value="javascript">Javascript</option>
-              <option value="python">Python</option>
-              <option value="java">Java</option>
-              <option value="cpp">CPP</option>
+              <option value="india">India</option>
+              <option value="usa">USA</option>
+              <option value="japan">Japan</option>
+              <option value="spain">Spain</option>
             </select>
           </label>
+          <br />
+          <div className="radio-buttons">
+            <input
+              id="male"
+              value="male"
+              name="gender"
+              type="radio"
+              onChange={this.handleGenderChange}
+            />
+            Male
+            <input
+              id="female"
+              value="female"
+              name="gender"
+              type="radio"
+              onChange={this.handleGenderChange}
+            />
+            Female
+            <input
+              id="other"
+              value="other"
+              name="gender"
+              type="radio"
+              onChange={this.handleGenderChange}
+            />
+            Other
+          </div>
           <br />
           <label>
             Comments
@@ -77,6 +118,17 @@ class Form extends Component {
               onChange={this.handleTextInfoChange}
             />
           </label>
+          <br />
+          <label>
+            Accept the privacy settings
+            <input
+              name="isOk"
+              type="checkbox"
+              checked={this.state.isOk}
+              onChange={this.handleCheckboxChange}
+            />
+          </label>
+          <br />
           <br />
           <input type="submit" value="submit" />
         </form>
